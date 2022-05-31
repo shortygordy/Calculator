@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="main.js"></script>
+    <script defer src="main.js"></script>
     <link rel="stylesheet" href="styles.css">
     <title>Calculator</title>
 </head>
@@ -14,7 +14,8 @@
 
     <div id="content">
         <div id="calcBorder">
-            <div id="screen">0
+            <div id="screen">
+                <div class="display">0</div>
             </div>
             <div id="functionButtons">
                 <div class="button clear">CLEAR</div>
@@ -22,22 +23,22 @@
             </div>
 
             <div id="inputButtons">
-                <div class="seven">7</div>
-                <div class="eight">8</div>
-                <div class="nine">9</div>
-                <div class="divide">&divide</div>
-                <div class="four">4</div>
-                <div class="five">5</div>
-                <div class="six">6</div>
-                <div class="multiply">&times</div>
-                <div class="one">1</div>
-                <div class="two">2</div>
-                <div class="three">3</div>
-                <div class="minus">&minus;</div>
-                <div class="decimal">.</div>
-                <div class="zero">0</div>
-                <div class="equals">&equals;</div>
-                <div class="plus">&plus;</div>
+                <div class="button">7</div>
+                <div class="button">8</div>
+                <div class="button">9</div>
+                <div class="operator button">&divide</div>
+                <div class="button">4</div>
+                <div class="button">5</div>
+                <div class="button">6</div>
+                <div class="operator button">&times</div>
+                <div class="button">1</div>
+                <div class="button">2</div>
+                <div class="button">3</div>
+                <div class="operator button">&minus;</div>
+                <div class="button">.</div>
+                <div class="button">0</div>
+                <div class="operator button">&equals;</div>
+                <div class="operator button">&plus;</div>
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    user-select: none;
 }
 
 body,
@@ -42,6 +43,12 @@ html {
     border: 2px solid black;
     border-radius: 5px;
     background-color: rgb(246, 246, 246);
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    font-size: 30pt;
+    padding-bottom: 15px;
+    padding-right: 20px;
 }
 
 #functionButtons {
@@ -91,8 +98,13 @@ html {
 
 #inputButtons div:hover,
 #functionButtons div:hover {
-    filter: brightness(90%);
+    filter: brightness(85%);
     cursor: pointer;
+}
+
+#inputButtons div.pressedDown,
+#functionButtons div.pressedDown {
+    filter: brightness(75%);
 }
 
 #footer {
