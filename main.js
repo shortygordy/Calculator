@@ -1,22 +1,31 @@
 //OPERATE FUNCTIONS
 function add(num1, num2) {
-    return num1 + num2;
+    return Number(num1) + Number(num2);
 }
 
 function subtract(num1, num2) {
-    return num1 - num2;
+    return Number(num1) - Number(num2);
 }
 
 function multiply(num1, num2) {
-    return num1 * num2;
+    return Number(num1) * Number(num2);
 }
 
 function divide(num1, num2) {
-    return num1 / num2;
+    return Number(num1) / Number(num2);
 }
 
 function operate(num1, num2, operator) {
-    operator(num1, num2);
+    switch (operator) {
+        case '+':
+            return add(num1, num2);
+        case '−':
+            return subtract(num1, num2);
+        case '×':
+            return multiply(num1, num2);
+        case '÷':
+            return divide(num1, num2);
+    }
 }
 
 function filterDisplay(e) {
@@ -24,40 +33,95 @@ function filterDisplay(e) {
     //delete leading zero
     if (display.textContent === '0' && (e.target.textContent !== '.' && e.target.classList[0] !== 'operator')) {
         display.textContent = '';
-        number = '';
+        currentNumber = '';
     }
 
-    //disable having 2 decimals, or showing the operators in main display
-    if ((display.textContent.includes('.') && e.target.textContent === '.') || e.target.classList[0] == 'operator') {
-        currentInput = '';
+    //disable showing operators in main display
+    if (e.target.classList[0] == 'operator') {
+        digit = '';
         return;
     }
-    //otherwise, set current input to the clicked button
-    else currentInput = e.target.textContent;
+
+    //disable having 2 decimals
+    if ((currentNumber.includes('.') && e.target.textContent === '.') || (currentOperator === '=' && e.target.textContent === '.' && num1 !== '')) {
+        digit = '';
+        return;
+    } else {
+        digit = e.target.textContent;
+    }
 }
+
 
 function updateDisplay() {
 
-    //add number to display
-    display.textContent += currentInput;
-    number += currentInput;
+    if (currentOperator !== '' && currentOperator !== '=' && secondNumber === '') {
+        display.textContent = '';
+    }
+    //add currentNumber to display
+    display.textContent += digit;
+    currentNumber += digit;
 }
 
 function clear() {
-    currentInput = 0;
+    digit = 0;
+    currentNumber = '';
+    num1 = '';
+    currentOperator = '';
+    result = '';
+    secondNumber = '';
+    prevOperator = '';
     display.textContent = 0;
-    number = 0;
 }
 
 function deleteNum() {
-    let string = String(number).slice(0, -1);
-    number = Number(string);
-    display.textContent = number;
+    let string = String(display.textContent).slice(0, -1);
+    currentNumber = Number(string);
+    display.textContent = currentNumber;
 }
 
 function main(e) {
     filterDisplay(e);
     updateDisplay();
+
+    //if first number and second number are entered, and current input is an operator, solve
+    if (e.target.classList[0] === 'operator' && (num1 !== '' && secondNumber !== '')) {
+        result = operate(num1, secondNumber, currentOperator);
+
+        //display result and use it for next equation
+        display.textContent = Math.round(result * 1000) / 1000;
+        num1 = Number(result);
+        secondNumber = '';
+        currentNumber = '';
+        currentOperator = e.target.textContent;
+        return;
+    }
+
+    //if input is a first number, store it into num1
+    if (currentOperator === '' && e.target.classList[0] === 'button') {
+        num1 += digit;
+        return;
+    }
+
+    //if input is an operator, store it
+    if (e.target.classList[0] === 'operator') {
+
+        //if a saved operator doesn't exist, save it to the first one
+        if (currentOperator === '') {
+            currentOperator = e.target.textContent;
+            currentNumber = '';
+        } else {
+            //if it does exist, save the first one to prev, and update the current one
+            prevOperator = currentOperator;
+            currentOperator = e.target.textContent;
+        }
+        return;
+    }
+
+    //if input is a second number
+    if (num1 !== '' && e.target.classList[0] === 'button') {
+        secondNumber += digit;
+        return;
+    }
 }
 
 
@@ -75,7 +139,11 @@ inputButtons.forEach(div => div.addEventListener('click', (e) => main(e)));
 functionButtons[0].addEventListener('click', clear);
 functionButtons[1].addEventListener('click', deleteNum);
 
-
 //declare global variables
-let currentInput = 0;
-let number = 0;
+let digit = 0;
+let currentNumber = '';
+let num1 = '';
+let currentOperator = '';
+let result = '';
+let secondNumber = '';
+let prevOperator = '';
