@@ -96,7 +96,8 @@ html {
     font-size: 16pt;
 }
 
-#inputButtons .operator {
+#inputButtons .operator,
+#inputButtons .equals {
     background-color: rgb(255, 135, 80);
 }
 
